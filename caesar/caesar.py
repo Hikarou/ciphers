@@ -7,7 +7,7 @@ class Caesar:
         self.key = key
         self.verbose = verbose
 
-    def decipher_char(self, char):
+    def _decipher_char(self, char):
         c = f.get_position(char)
         if c == -1:
             return ''
@@ -17,12 +17,12 @@ class Caesar:
     def decipher_string(self, string):
         clear = ''
         for c in string:
-            clear += self.decipher_char(c)
+            clear += self._decipher_char(c)
         if self.verbose:
             print(clear)
         return clear
 
-    def cipher_char(self, char):
+    def _cipher_char(self, char):
         m = f.get_position(char)
         if m == -1:
             return ''
@@ -32,7 +32,7 @@ class Caesar:
     def cipher_string(self, string):
         ciphered = ''
         for c in string:
-            ciphered += self.cipher_char(c)
+            ciphered += self._cipher_char(c)
         if self.verbose:
             print(ciphered)
         return ciphered
