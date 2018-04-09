@@ -11,7 +11,7 @@ class Caesar:
         c = f.get_position(char)
         if c == -1:
             return ''
-        m = chr(ord('A') + (c - self.key) % (ord('Z') - ord('A')))
+        m = chr(ord('A') + (c - self.key) % (ord('Z') - ord('A') + 1))
         return m
 
     def decipher_string(self, string):
@@ -26,7 +26,7 @@ class Caesar:
         m = f.get_position(char)
         if m == -1:
             return ''
-        c = chr(ord('A') + (m + self.key) % (ord('Z') - ord('A')))
+        c = chr(ord('A') + (m + self.key) % (ord('Z') - ord('A') + 1))
         return c
 
     def cipher_string(self, string):

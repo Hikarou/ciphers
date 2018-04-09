@@ -12,7 +12,7 @@ class Vigenere:
         shift = f.get_position(key_letter)
         if c == -1:
             return ''
-        m = chr(ord('A') + (c - shift) % (ord('Z') - ord('A')))
+        m = chr(ord('A') + (c - shift) % (ord('Z') - ord('A') + 1))
         return m
 
     def decipher_string(self, string):
@@ -29,7 +29,7 @@ class Vigenere:
         shift = f.get_position(key_letter)
         if m == -1:
             return ''
-        c = chr(ord('A') + (m + shift) % (ord('Z') - ord('A')))
+        c = chr(ord('A') + (m + shift) % (ord('Z') - ord('A') + 1))
         return c
 
     def cipher_string(self, string):
