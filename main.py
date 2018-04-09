@@ -1,29 +1,104 @@
-from vigenere import *
-import argparse
+from caesar.caesar import Caesar
+from vigenere.vigenere import Vigenere
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="Programme de chiffrement et déchiffrement\nContient Vigenère et César")
-    parser.add_argument('method', metavar='method', type=int,
-                        help='L\'algorithme choisi\n0 : Vignere\n 1 : Ceasar')
-    parser.add_argument('key', metavar='key', type=int,
-                        help='La clé qui sera utilisée pour de (dé)chiffrement')
-    parser.add_argument('message', metavar='str', type=str,
-                        help='Le message à (dé)chiffrer')
 
-    args = parser.parse_args()
+    while True:
+        # Traitement du choix de l'algorithme
+        out = -1
+        alg = 0
+        while alg == 0:
+            print("Quel algorithme sera utilisé ? (Q : pour quitter)\n\t1 - César\n\t2 - Vigenère")
+            alg = input()
+            if alg.lower() == "q":
+                out = 0
+                break
 
-    clair = args.message
+            try:
+                alg = int(alg)
+                if alg > 2 or alg < 1:
+                    raise ValueError()
+            except ValueError:
+                print(
+                    "La valeur donnée n'est pas un algorithme possible!\n"
+                    "\t1 - César\n\t2 - Vigenère"
+                )
+                alg = 0
 
-    if args.method == 0:
-        algo = vigenere.Vigenere(args.key)
-    else:
-        print("Algorithme choisi ({}) n'existe pas".format(args.method))
-        exit(1)
+        if out == 0:
+            break
 
-    chiff = algo.cipher_string(clair)
+        # Traitement du choix de la clé
+        cle = -1
+        while cle < 0 or cle > 26:
+            print("Quelle sera la clé de l'algorithme choisi ? (Q : pour quitter)\n\t[0;26]")
+            cle = input()
 
-    reclair = algo.decipher_string(chiff)
+            if cle.lower() == "q":
+                out = 0
+                break
 
-    print("Le message en clair est :\n{}\nLe message chiffré est :\n{}\nPuis déchiffré :\n{}".format(clair, chiff,
-                                                                                                     reclair))
+            # Si c'est l'algorithme de César, il faut que ce soit un chiffre.
+            if alg == 1:
+                try:
+                    cle = int(cle)
+                except ValueError:
+                    print(
+                        "La clé donnée n'est pas un entier!\n"
+                        "Merci de donner une valeur correcte!\n"
+                    )
+                    cle = -1
+
+        if out == 0:
+            break
+
+        chiffr = -1
+        while chiffr == -1:
+            print("Il faut chiffrer le message ou le déchiffrer ? (Q : pour quitter)\n\t1 - Chiffrer\n\t2 - Déchiffrer")
+            chiffr = input()
+            if chiffr.lower() == "q":
+                out = 0
+                break
+
+            try:
+                chiffr = int(chiffr)
+                if chiffr > 2 or chiffr < 1:
+                    raise ValueError()
+            except ValueError:
+                print(
+                    "La valeur donnée n'est pas un choix possible!\n"
+                    "\t1 - Chiffrer\n\t2 - Déchiffrer"
+                )
+                chiffr = -1
+
+        if out == 0:
+            break
+
+        print("Quel message faudra-t'il ", end="")
+        if chiffr == 2:
+            print("dé", end="")
+        print("chiffrer ?")
+        mess = input()
+
+        if alg == 1:  # César
+            alg = Caesar(cle)
+        elif alg == 2:  # Vigenere
+            alg = Vigenere(cle)
+        else:
+            print("L'aglorithme n'est pas le bon... ceci ne devrait jamais arriver")
+            quit(-1)
+
+        outMess = ""
+        if chiffr == 1:
+            outMess = alg.cipher_string(mess)
+        elif chiffr == 2:
+            outMess = alg.decipher_string(mess)
+        else:
+            print("Le choix de (dé)chiffrement n'est pas le bon... ceci ne devrait jamais arriver")
+            quit(-1)
+
+        print("Le message initial était :\n{}\nAprès ".format(mess), end="")
+        if chiffr == 2:
+            print("dé", end="")
+        print("chiffrement, le message est :\n{}".format(outMess))
+    print("Bye!")
