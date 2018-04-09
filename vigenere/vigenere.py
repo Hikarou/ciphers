@@ -40,6 +40,3 @@ class Vigenere:
         if self.verbose:
             print(ciphered)
         return ciphered
-
-# ABCDEFGHIJKLMNOPQRSTUVWXYZ
-# KLMNOPQRSTUVWXYZABCDEFGHIJ
