@@ -30,8 +30,12 @@ if __name__ == "__main__":
 
         # Traitement du choix de la clé
         cle = -1
-        while cle < 0 or cle > 26:
-            print("Quelle sera la clé de l'algorithme choisi ? (Q : pour quitter)\n\t[0;26]")
+        while True:
+            print("Quelle sera la clé de l'algorithme choisi ? (Q : pour quitter)")
+            if alg == 1:
+                print("\t[0;26]")
+            else:
+                print("\t[a-zA-Z]+")
             cle = input()
 
             if cle.lower() == "q":
@@ -42,12 +46,15 @@ if __name__ == "__main__":
             if alg == 1:
                 try:
                     cle = int(cle)
+                    break
                 except ValueError:
                     print(
                         "La clé donnée n'est pas un entier!\n"
                         "Merci de donner une valeur correcte!\n"
                     )
                     cle = -1
+            elif alg == 2:
+                break
 
         if out == 0:
             break
