@@ -7,32 +7,36 @@ class Vigenere:
         self.key = key
         self.verbose = verbose
 
-    def decipher_char(self, char):
+    def _decipher_char(self, char, key_letter):
         c = f.get_position(char)
+        shift = f.get_position(key_letter)
         if c == -1:
             return ''
-        m = chr(ord('A') + (c - self.key) % (ord('Z') - ord('A')))
+        m = chr(ord('A') + (c - shift) % (ord('Z') - ord('A')))
         return m
 
     def decipher_string(self, string):
         clear = ''
-        for c in string:
-            clear += self.decipher_char(c)
+        key_length = len(self.key)
+        for i, c in enumerate(string):
+            clear += self._decipher_char(c, self.key[i % key_length])
         if self.verbose:
             print(clear)
         return clear
 
-    def cipher_char(self, char):
+    def cipher_char(self, char, key_letter):
         m = f.get_position(char)
+        shift = f.get_position(key_letter)
         if m == -1:
             return ''
-        c = chr(ord('A') + (m + self.key) % (ord('Z') - ord('A')))
+        c = chr(ord('A') + (m + shift) % (ord('Z') - ord('A')))
         return c
 
     def cipher_string(self, string):
         ciphered = ''
-        for c in string:
-            ciphered += self.cipher_char(c)
+        key_length = len(self.key)
+        for i, c in enumerate(string):
+            ciphered += self.cipher_char(c, self.key[i % key_length])
         if self.verbose:
             print(ciphered)
         return ciphered
