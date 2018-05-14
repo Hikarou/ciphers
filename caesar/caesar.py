@@ -1,4 +1,4 @@
-# https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher
+# https://en.wikipedia.org/wiki/Caesar_cipher
 from ciphers_helper import functions as f
 
 
